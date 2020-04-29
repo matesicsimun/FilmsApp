@@ -82,6 +82,9 @@
       <path value="$PROJECT_DIR$/vendor/symfony/inflector" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
       <path value="$PROJECT_DIR$/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
     </include_path>
   </component>
   <component name="ProjectId" id="1bAFW9GIWVYB8R1nIGDsfy5Syh1" />
@@ -96,12 +99,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\FilmsApp\public" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\FilmsApp\templates" />
       <recent name="C:\xampp\htdocs\FilmsApp\templates\film" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\FilmsApp\public" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -115,7 +118,8 @@
       <option name="presentableId" value="Default" />
       <updated>1588067019613</updated>
       <workItem from="1588067020756" duration="1886000" />
-      <workItem from="1588068922951" duration="10844000" />
+      <workItem from="1588068922951" duration="11341000" />
+      <workItem from="1588154876684" duration="5763000" />
     </task>
     <servers />
   </component>
@@ -135,13 +139,17 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1588094600465" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1588068924199">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1588154894871">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1588068924199" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1588154894871" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1588070677526">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1588070677526" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1588176176709">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1588176176709" />
   </component>
 </project>

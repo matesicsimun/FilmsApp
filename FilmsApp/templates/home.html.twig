@@ -12,15 +12,17 @@
                 <th>Film cover</th>
                 <th>Release year</th>
                 <th>Duration</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
             {% for film in films %}
                 <tr>
                     <td>{{ film.title}}</td>
-                    <td> <img src="/getImage/{{ film.id }}"></td>
+                    <td> <img width="200" height="300" src="/getImage/{{ film.id }}"></td>
                     <td> {{ film.year }}</td>
                     <td> {{ film.duration }}</td>
+                    <td> <a href="/delete/{{film.id}}" class="btn btn-dark">Delete</a></td>
                 </tr>
             {% endfor %}
             </tbody>

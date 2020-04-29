@@ -5,23 +5,22 @@ namespace App\Controller;
 use App\Entity\Film;
 use App\Entity\Genre;
 use App\Form\FilmType;
+use App\Services\ImageService;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
 class FilmController extends AbstractController
 {
 
-
     /**
-     * @Route("/film", name="film")
+     * @Route("/", name="index")
      */
-    public function index()
-    {
-        return $this->render('film/index.html.twig', [
-            'controller_name' => 'FilmController',
-        ]);
+    public function index(){
+        return $this->redirectToRoute("home");
     }
 
     /**
@@ -39,26 +38,43 @@ class FilmController extends AbstractController
     }
 
     /**
+     * @Route("/delete/{id}", name="delete")
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function delete(int $id){
+        $em = $this->getDoctrine()->getManager();
+        $film = $em->getRepository(Film::class)->find($id);
+
+        $em->remove($film);
+        $em->flush();
+
+        $this->addFlash('success', 'Film removed.');
+        return $this->redirectToRoute("home");
+    }
+
+    /**
      * @Route("/getImage/{id}", name="getImage")
      * @param int $id The film primary key.
+     * @param ImageService $imageService
      */
-    public function retrieveImage(int $id)
+    public function retrieveImage(int $id, ImageService $imageService)
     {
         $film = $this->getDoctrine()
                     ->getRepository(Film::class)
                     ->find($id);
 
 
-        $imgService = \ImageService::getInstance();
-        $imgService->showImage($film->getCoverType(), stream_get_contents($film->getCover()));
+        $imageService->showImage($film->getCover(), $film->getCoverType());
     }
 
     /**
      * @Route("/add_film", name="add_film", methods={"GET","POST"})
      * @param Request $request
+     * @param ImageService $imageService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function add(Request $request){
+    public function add(Request $request, ImageService $imageService){
 
         $film = new Film();
 
@@ -76,9 +92,19 @@ class FilmController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $filmCover = $form->get('cover')->getData();
 
-            $film->setIdGenre($form->get('genre')->getData());
-            $film->setCoverType(\ImageService::getInstance()->getImageType($film->getCover()));
+            if ($filmCover){
+                $fileData = $imageService->saveUploadedImage($filmCover);
+                $film->setCover($fileData['filename']);
+                $film->setCoverType($fileData['type']);
+            }
+
+            $filmGenre = $this->getDoctrine()
+                ->getRepository(Genre::class)
+                ->find($form->get('genre')->getData());
+
+            $film->setGenre($filmGenre);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($film);

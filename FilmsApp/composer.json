@@ -4,6 +4,8 @@
     "require": {
         "php": "^7.2.5",
         "ext-ctype": "*",
+        "ext-exif": "*",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.10",
         "symfony/console": "5.0.*",
@@ -13,11 +15,10 @@
         "symfony/framework-bundle": "5.0.*",
         "symfony/maker-bundle": "^1.15",
         "symfony/orm-pack": "^1.0",
+        "symfony/string": "5.0.*",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "5.0.*",
-        "symfony/yaml": "5.0.*",
-      "ext-gd": "*",
-        "ext-exif": "*"
+        "symfony/yaml": "5.0.*"
     },
     "require-dev": {
     },

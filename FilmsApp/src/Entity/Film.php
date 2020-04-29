@@ -32,12 +32,12 @@ class Film
     private $year;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Genre")
      */
-    private $id_genre;
+    private $genre;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $cover;
 
@@ -95,14 +95,14 @@ class Film
         return $this;
     }
 
-    public function getIdGenre(): ?int
+    public function getGenre(): Genre
     {
-        return $this->id_genre;
+        return $this->genre;
     }
 
-    public function setIdGenre(int $id_genre): self
+    public function setGenre(Genre $genre): self
     {
-        $this->id_genre = $id_genre;
+        $this->genre = $genre;
 
         return $this;
     }

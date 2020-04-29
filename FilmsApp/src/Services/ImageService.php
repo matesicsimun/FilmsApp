@@ -1,50 +1,74 @@
 <?php
 
+namespace App\Services;
+
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
+
 class ImageService
 {
-    private static $instance = null;
+    private $slugger;
+    private $imageDirectory;
 
-    private function __construct()
+
+    public function __construct(string $imageDirectory, SluggerInterface $slugger)
     {
-    }
-
-    public static function getInstance()
-    {
-        if (null === self::$instance){
-            self::$instance = new ImageService();
-        }
-
-        return self::$instance;
+        $this->slugger = $slugger;
+        $this->imageDirectory = $imageDirectory;
     }
 
     /**
      * Displays the image associated
      * with the film.
+     * @param string $fileName
      * @param string $imageType The image type (png, jpg, etc.)
-     * @param string $imageData The image data in a string.
      */
-    public function showImage(string $imageType, string $imageData){
+    public function showImage(string $fileName, string $imageType){
         $format = "Content-Type: image/".$imageType;
         header($format);
 
-        $image = imagecreatefromstring($imageData);
-
+        $imageUrl = $this->getImageDirectory()."/".$fileName;
         switch($imageType){
             case 'jpg':
             case 'jpeg':
+                $image = imagecreatefromjpeg($imageUrl);
                 imagejpeg($image);
                 break;
             case 'png':
+                $image = imagecreatefrompng($imageUrl);
                 imagepng($image);
                 break;
             case 'gif':
+                $image = imagecreatefromgif($imageUrl);
                 imagegif($image);
                 break;
             default:
+                $image = imagecreatefrompng($imageUrl);
                 imagepng($image);
         }
 
         imagedestroy($image);
+    }
+
+    public function saveUploadedImage(UploadedFile $image){
+        $extension = $image->guessExtension();
+        $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $this->slugger->slug($originalFilename);
+        $fileName = $safeFilename.'-'.uniqid().'.'.$extension;
+
+        try {
+            $image->move($this->getImageDirectory(), $fileName);
+        } catch (FileException $e) {
+
+        }
+
+        return ['filename'=>$fileName, 'type'=>$extension];
+    }
+
+    public function getImageDirectory(){
+        return $this->imageDirectory;
     }
 
     /**

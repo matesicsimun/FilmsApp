@@ -23,8 +23,11 @@ class FilmType extends AbstractType
             ->add('duration', IntegerType::class, ['label'=>"Enter film duration: "])
             ->add('year', IntegerType::class, ['label'=>"Enter release year: "])
             ->add('genre', ChoiceType::class,
-                        ['choices'=>$options['genre_options'], 'mapped'=>false, 'label'=>"Choose film genre: "])
-            ->add('cover', FileType::class, ['label'=>"Upload film cover: "])
+                                        ['choices'=>$options['genre_options'],
+                                                            'mapped'=>false,
+                                                            'label'=>"Choose film genre: "])
+            ->add('cover', FileType::class, ['label'=>"Upload film cover: ",
+                                                        'mapped'=>false])
             ->add('save', SubmitType::class, ['label'=>"Add film"]);
     }
 
